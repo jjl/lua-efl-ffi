@@ -37,8 +37,6 @@ CPPFLAGS := $(CPPFLAGS) $(foreach mod,$(modules),$($(mod)_CPPFLAGS))
 $(foreach mod,$(modules),$(eval $(mod)_CFLAGS=$(filter-out -I%,$(shell pkg-config --cflags $(mod)))))
 CFLAGS := $(CFLAGS) $(foreach mod,$(modules),$($(mod)_CFLAGS))
 
-$(foreach mod,$(modules),$(eval $(mod)_INCLUDE=$(patsubst -I%,%,$(filter %$(mod)-$(version),$($(mod)_CPPFLAGS)))))
-
 all: $(foreach mod,$(modules),$(mod).lua)
 
 %.lua: %.cdecl.c %.lua.in gcc-lua
