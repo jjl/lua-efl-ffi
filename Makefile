@@ -31,10 +31,10 @@ ecore_HEADERS = Ecore.h Ecore_Getopt.h
 evas_HEADERS = Evas.h Evas_GL.h
 elementary_HEADERS = Elementary.h
 
-$(foreach mod,$(modules),$(eval $(mod)_CPPFLAGS=$(shell pkg-config --cflags-only-I $(mod))))
+$(foreach mod,$(modules),$(eval $(mod)_CPPFLAGS=$(filter -I%,$(shell pkg-config --cflags $(mod)))))
 CPPFLAGS := $(CPPFLAGS) $(foreach mod,$(modules),$($(mod)_CPPFLAGS))
 
-$(foreach mod,$(modules),$(eval $(mod)_CFLAGS=$(shell pkg-config --cflags $(mod))))
+$(foreach mod,$(modules),$(eval $(mod)_CFLAGS=$(filter-out -I%,$(shell pkg-config --cflags $(mod)))))
 CFLAGS := $(CFLAGS) $(foreach mod,$(modules),$($(mod)_CFLAGS))
 
 $(foreach mod,$(modules),$(eval $(mod)_INCLUDE=$(patsubst -I%,%,$(filter %$(mod)-$(version),$($(mod)_CPPFLAGS)))))
