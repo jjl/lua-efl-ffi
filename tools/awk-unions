@@ -1,0 +1,1 @@
+tolower($1)~symbol_pattern && $2=="union" { print "cdecl_union("$1")" }
